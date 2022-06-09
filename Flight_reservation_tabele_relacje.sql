@@ -11,7 +11,7 @@
  Target Server Version : 100608
  File Encoding         : 65001
 
- Date: 09/06/2022 01:18:09
+ Date: 09/06/2022 02:06:58
 */
 
 SET NAMES utf8mb4;
@@ -38,14 +38,11 @@ CREATE TABLE `faktura`  (
   `Brutto` float UNSIGNED NOT NULL,
   `Netto` float UNSIGNED NOT NULL,
   `VAT` int(10) UNSIGNED NOT NULL,
-  `NIP` int(20) UNSIGNED NOT NULL,
-  `ID_Osoba` int(10) UNSIGNED NOT NULL,
+  `NIP` varchar(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `ID_Przewoznik` int(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`ID_Faktura`) USING BTREE,
   INDEX `ID_Przewoznik`(`ID_Przewoznik`) USING BTREE,
-  INDEX `ID_Osoba`(`ID_Osoba`) USING BTREE,
-  CONSTRAINT `faktura_ibfk_1` FOREIGN KEY (`ID_Przewoznik`) REFERENCES `przewoznik` (`ID_Przewoznik`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `faktura_ibfk_2` FOREIGN KEY (`ID_Osoba`) REFERENCES `osoba` (`ID_Osoba`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `faktura_ibfk_1` FOREIGN KEY (`ID_Przewoznik`) REFERENCES `przewoznik` (`ID_Przewoznik`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -123,8 +120,8 @@ CREATE TABLE `lotnisko`  (
 DROP TABLE IF EXISTS `osoba`;
 CREATE TABLE `osoba`  (
   `ID_Osoba` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `Login` varchar(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `Haslo` varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `Login` varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `Haslo` varchar(35) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `Mail` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `Plec` enum('Kobieta','Mezczyzna','Inne') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `Imie` varchar(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
@@ -132,7 +129,7 @@ CREATE TABLE `osoba`  (
   `Pesel` int(11) UNSIGNED NOT NULL,
   `Nr_dowodu/Paszportu` int(10) UNSIGNED NOT NULL,
   `Typ` enum('Uzytkownik','Administrator','Pracownik') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `Nr_telefonu` int(11) UNSIGNED NOT NULL,
+  `Nr_telefonu` varchar(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   PRIMARY KEY (`ID_Osoba`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
